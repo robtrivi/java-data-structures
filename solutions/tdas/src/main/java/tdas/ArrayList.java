@@ -29,7 +29,7 @@ public class ArrayList<E> implements List<E>{
         }
         return elements[index];
     }
-
+    @Override
     public E set(E element, int index){
         if (!(isIndexValid(index))){
             throw new IndexOutOfBoundsException("Indice no válido");
@@ -97,7 +97,7 @@ public class ArrayList<E> implements List<E>{
         }
         return cadena + " ]";
     }
-
+    @Override
     public boolean addAll(List<E> otherList){
         for (E element :otherList) {
             this.addLast(element);
@@ -111,11 +111,11 @@ public class ArrayList<E> implements List<E>{
         newArrayList.addAll(otherList);
         return newArrayList;
     }
-
+    @Override
     public boolean contains(E element){
         return -1!=this.indexOf(element);
     }
-
+    @Override
     public E remove(int index){
         if (!isIndexValid(index)){
             throw new IndexOutOfBoundsException("Indice fuera de rango");
@@ -127,7 +127,7 @@ public class ArrayList<E> implements List<E>{
         elements[--efectivesize] = null;
         return tempElement;
     }
-
+    @Override
     public boolean delete(E element){
         int index = this.indexOf(element);
         if (!(this.isIndexValid(index))){
@@ -135,7 +135,7 @@ public class ArrayList<E> implements List<E>{
         }
         return remove(index) != null;
     }
-
+    @Override
     public int indexOf(E element){
         for (int i = 0; i < efectivesize; i++) {
             if (elements[i].equals(element)){
