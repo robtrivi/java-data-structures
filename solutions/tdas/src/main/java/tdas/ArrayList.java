@@ -161,10 +161,39 @@ public class ArrayList<E> implements List<E>{
     }
 
     public boolean isSubList(List<E> subList){
-        return true;
+
+        int indexvalids = 0;
+        for (E element : this) {
+            if (element.equals(subList.get(indexvalids))){
+                indexvalids++;
+            }else{
+                indexvalids = 0;
+            }
+            if (indexvalids == subList.size()){
+                return true;
+            }
+        }
+
+        return false;
     }
-    // [ D, Z, C, A, H, R ] -> [Z, C, A] true
-    // [ D, Z, C, A, H, R ] -> [Z, A] false
+
+    public ArrayList<E> sliceWithLeap(int firstIndex, int lastIndex, int leap){
+        if (!isIndexValid(firstIndex) || isIndexValid(lastIndex-1)){
+            throw new IndexOutOfBoundsException("No es un indice valido");
+        }
+        if (lastIndex < firstIndex){
+            throw new RuntimeException("El indice final debe ser mayor");
+        }
+        ArrayList<E> newArray = new ArrayList<>();
+        for (int i = firstIndex; i < lastIndex; i+=leap) {
+            newArray.addLast(this.get(i));
+        }
+        return newArray;
+    }
+
+    public ArrayList<E> slice(int firstIndex, int lastIndex){
+        return this.sliceWithLeap(firstIndex,lastIndex,1);
+    }
 
     @Override
     public Iterator<E> iterator() {
