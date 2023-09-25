@@ -18,12 +18,24 @@ public class LinkedList<E> implements List<E>{
 
     @Override
     public boolean addLast(E element) {
-        return false;
+        NodeList<E> node = new NodeList<>(element);
+        if (this.isEmpty()){
+            this.head = node;
+            this.tail = node;
+            return true;
+        }
+        this.tail.setNext(node);
+        this.tail = node;
+        return true;
     }
 
     @Override
     public E get(int index) {
-        return null;
+        NodeList<E> node = this.getNode(index);
+        if (node==null){
+            throw new IndexOutOfBoundsException("Indice fuera de rango");
+        }
+        return node.getData();
     }
 
     @Override
@@ -33,26 +45,77 @@ public class LinkedList<E> implements List<E>{
 
     @Override
     public int size() {
-        return 0;
+        int size = 0;
+        for (E data : this) {
+            size++;
+        }
+        return size;
     }
 
     @Override
     public E set(E element, int index) {
+        if (element==null){
+            throw new RuntimeException("No se pueden setear elementos nulos");
+        }
+        NodeList<E> node = this.getNode(index);
+        if (node == null){
+            throw new IndexOutOfBoundsException("Indice fuera de rango");
+        }
+        E data = node.getData();
+        node.setData(element);
+        return data;
+    }
+
+    private NodeList<E> getNode(int index){
+        int cont = 0;
+        for (NodeList<E> current = head; current != null; current = current.getNext()) {
+            if (cont++ == index){
+                return current;
+            }
+        }
         return null;
     }
 
     @Override
     public boolean add(E element, int index) {
-        return false;
+        NodeList<E> node = new NodeList<>(element);
+        if (this.isEmpty()){
+            this.head = node;
+            this.tail = node;
+            return true;
+        }
+        if (index==0){
+            this.addFirst(element);
+            return true;
+        }
+        NodeList<E> previousNode = this.getNode(index-1);
+        if (previousNode == null){
+            throw new IndexOutOfBoundsException("Indice no valido");
+        }
+        NodeList<E> currentNode = previousNode.getNext();
+        if (currentNode == null){
+            this.addLast(element);
+            return true;
+        }
+
+        previousNode.setNext(node);
+        node.setNext(currentNode);
+
+        return true;
     }
 
     @Override
     public boolean addAll(List<E> otherList) {
-        return false;
+        for (E element :
+                otherList) {
+            this.addLast(element);
+        }
+        return true;
     }
 
     @Override
     public E remove(int index) {
+        NodeList<E>
         return null;
     }
 
@@ -73,17 +136,38 @@ public class LinkedList<E> implements List<E>{
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        Iterator<E> it = new Iterator<E>() {
+
+            private NodeList<E> current = head;
+            @Override
+            public boolean hasNext() {
+                return current !=null;
+            }
+
+            @Override
+            public E next() {
+                E data = current.getData();
+                current = current.getNext();
+                return data;
+            }
+        };
+
+
+        return it;
     }
 
     @Override
     public String toString() {
 
-        String cadena = "";
-        for (NodeList<E> nodeTemp = head; nodeTemp != null ; nodeTemp = nodeTemp.getNext()) {
-            cadena += nodeTemp.getData() + ", ";
+        StringBuilder cadena = new StringBuilder("[ ");
+        for (E data :this) {
+            String character = ", ";
+            if (data == tail.getData()){
+                character = " ]";
+            }
+            cadena.append(data).append(character);
         }
 
-        return cadena;
+        return cadena.toString();
     }
 }

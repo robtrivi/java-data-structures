@@ -10,9 +10,11 @@ import java.util.Iterator;
 public class Main {
     public static void main(String[] args) {
         LinkedList<String> ll = new LinkedList<>();
-        ll.addFirst("A");
-        ll.addFirst("B");
-        ll.addFirst("C");
+        ll.addLast("A");
+        ll.addLast("B");
+        ll.addLast("C");
+        System.out.println(ll);
+        ll.add("Z",3);
         System.out.println(ll);
     }
 }
