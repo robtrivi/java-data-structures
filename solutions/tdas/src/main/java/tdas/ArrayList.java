@@ -24,14 +24,14 @@ public class ArrayList<E> implements List<E>{
 
     @Override
     public E get(int index) {
-        if (!(isIndexValid(index))){
+        if (!(isValidIndex(index))){
             throw new IndexOutOfBoundsException("Indice no válido");
         }
         return elements[index];
     }
     @Override
     public E set(E element, int index){
-        if (!(isIndexValid(index))){
+        if (!(isValidIndex(index))){
             throw new IndexOutOfBoundsException("Indice no válido");
         }
         if (element == null){
@@ -65,7 +65,7 @@ public class ArrayList<E> implements List<E>{
         return efectivesize;
     }
 
-    private boolean isIndexValid(int index){
+    private boolean isValidIndex(int index){
         if (this.isEmpty() && index==0){
             return true;
         }
@@ -117,7 +117,7 @@ public class ArrayList<E> implements List<E>{
     }
     @Override
     public E remove(int index){
-        if (!isIndexValid(index)){
+        if (!isValidIndex(index)){
             throw new IndexOutOfBoundsException("Indice fuera de rango");
         }
         E tempElement = elements[efectivesize-1];
@@ -130,7 +130,7 @@ public class ArrayList<E> implements List<E>{
     @Override
     public boolean delete(E element){
         int index = this.indexOf(element);
-        if (!(this.isIndexValid(index))){
+        if (!(this.isValidIndex(index))){
             throw new RuntimeException("No se ha encontrado el elemento");
         }
         return remove(index) != null;
@@ -178,7 +178,7 @@ public class ArrayList<E> implements List<E>{
     }
 
     public ArrayList<E> sliceWithLeap(int firstIndex, int lastIndex, int leap){
-        if (!isIndexValid(firstIndex) || isIndexValid(lastIndex-1)){
+        if (!isValidIndex(firstIndex) || isValidIndex(lastIndex-1)){
             throw new IndexOutOfBoundsException("No es un indice valido");
         }
         if (lastIndex < firstIndex){

@@ -1,5 +1,6 @@
 package tdas;
 
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class LinkedList<E> implements List<E>{
@@ -115,7 +116,7 @@ public class LinkedList<E> implements List<E>{
 
     @Override
     public E remove(int index) {
-        NodeList<E>
+//        NodeList<E>
         return null;
     }
 
@@ -163,11 +164,53 @@ public class LinkedList<E> implements List<E>{
         for (E data :this) {
             String character = ", ";
             if (data == tail.getData()){
-                character = " ]";
+                character = "";
             }
             cadena.append(data).append(character);
         }
 
-        return cadena.toString();
+        return cadena.append(" ]").toString();
     }
+
+    public LinkedList<E> findAll(Comparator<E> cmp, E object){
+        LinkedList<E> elements = new LinkedList<>();
+        for (E element : this) {
+            if (cmp.compare(element,object) == 0){
+                elements.addLast(element);
+            }
+        }
+        return elements;
+    }
+
+    public LinkedList<E> mayorQue(Comparator<E> comparador, E referencia) {
+        LinkedList<E> resultado = new LinkedList<>();
+        for (E E : this ) {
+            if (comparador.compare(E, referencia) > 0) {
+                resultado.addLast(E);
+            }
+        }
+        return resultado;
+    }
+
+    public LinkedList<E> menorQue( Comparator<E> comparador, E referencia) {
+        LinkedList<E> resultado = new LinkedList<>();
+        for (E E : this) {
+            if (comparador.compare(E, referencia) < 0) {
+                resultado.addLast(E);
+            }
+        }
+        return resultado;
+    }
+
+    public LinkedList<E> entre(Comparator<E> cmp, E objetoMenor, E objetoMayor){
+        LinkedList<E> resultado = new LinkedList<>();
+        for (E e : this) {
+            if ((cmp.compare(e, objetoMenor) > 0) && (cmp.compare(e,objetoMayor))<0){
+                resultado.addLast(e);
+            }
+        }
+        return resultado;
+    }
+
+
 }
